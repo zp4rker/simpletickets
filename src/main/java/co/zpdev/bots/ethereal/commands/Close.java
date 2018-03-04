@@ -10,25 +10,22 @@ import net.dv8tion.jda.core.entities.TextChannel;
 
 import java.time.Instant;
 
-public class Add {
+public class Close {
 
-    @Command(aliases = "add")
+    @Command(aliases = "close")
     public void onCommand(Message message) {
         if (!message.getMember().hasPermission(Permission.ADMINISTRATOR)) return;
-        if (message.getMentionedMembers().size() != 1 && message.getMentionedChannels().size() != 1) return;
-        if (!message.getMentionedChannels().get(0).getName().startsWith("ticket-")) return;
+        if (!message.getChannel().getName().startsWith("ticket-")) return;
 
         message.delete().queue();
 
-        TextChannel ticket = message.getMentionedChannels().get(0);
-        ticket.createPermissionOverride(message.getMentionedMembers().get(0)).setAllow(3072).complete();
+        TextChannel c = message.getTextChannel();
+        c.delete().complete();
 
-        String name = message.getMentionedMembers().get(0).getEffectiveName();
         TextChannel logs = message.getGuild().getTextChannelById(Ethereal.LOGS);
         MessageEmbed log = new EmbedBuilder().setColor(Ethereal.EMBED)
-                .setAuthor("Member Added")
-                .setDescription("**" + message.getMember().getEffectiveName() + "** added **" + name + "** to #"
-                        + ticket.getName())
+                .setAuthor("Ticket Closed")
+                .setDescription("#" + c.getName() + " closed by **" + message.getMember().getEffectiveName() + "**.")
                 .setTimestamp(Instant.now()).build();
         logs.sendMessage(log).queue();
     }
