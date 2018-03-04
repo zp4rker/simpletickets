@@ -1,0 +1,26 @@
+package co.zpdev.bots.ethereal;
+
+import co.zpdev.bots.core.command.handler.CommandHandler;
+import co.zpdev.bots.ethereal.listeners.MemberJoin;
+import net.dv8tion.jda.core.AccountType;
+import net.dv8tion.jda.core.JDABuilder;
+import net.dv8tion.jda.core.hooks.AnnotatedEventManager;
+
+public class Ethereal {
+
+    public static long LOGS = 419702896221749248L;
+    public static long JOIN = 388053430607806465L;
+
+    public static long SR = 419695119835594763L;
+    public static long CAT = 388075127645929475L;
+
+    public static void main(String[] args) throws Exception {
+        CommandHandler handler = new CommandHandler("-", "co.zpdev.bots.ethereal.commands");
+
+        new JDABuilder(AccountType.BOT).setToken(args[0])
+                .setEventManager(new AnnotatedEventManager())
+                .addEventListener(handler)
+                .addEventListener(new MemberJoin()).buildBlocking();
+    }
+
+}
