@@ -7,7 +7,6 @@ import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
 
-import java.awt.*;
 import java.time.Instant;
 
 public class New {
@@ -32,14 +31,14 @@ public class New {
         logs.getManager().setTopic("Tickets: " + ticket).queue();
 
         String name = message.getAuthor().getName() + "#" + message.getAuthor().getDiscriminator();
-        MessageEmbed log = new EmbedBuilder().setColor(Color.decode("#7254BF")).setAuthor("New Ticket")
+        MessageEmbed log = new EmbedBuilder().setColor(Ethereal.EMBED).setAuthor("New Ticket")
                 .setDescription("New ticket created by **" + name + "**.")
                 .setFooter("Ticket #" + String.format("%04d", ticket), null)
                 .setTimestamp(Instant.now()).build();
         logs.sendMessage(log).queue();
 
         MessageEmbed embed = new EmbedBuilder()
-                .setColor(Color.decode("#7254BF"))
+                .setColor(Ethereal.EMBED)
                 .setAuthor("Thank you for contacting DigiDev, a team member will be with you shortly.").build();
         c.sendMessage(embed).queue();
     }

@@ -6,6 +6,8 @@ import net.dv8tion.jda.core.AccountType;
 import net.dv8tion.jda.core.JDABuilder;
 import net.dv8tion.jda.core.hooks.AnnotatedEventManager;
 
+import java.awt.*;
+
 public class Ethereal {
 
     public static long LOGS = 419702896221749248L;
@@ -13,6 +15,8 @@ public class Ethereal {
 
     public static long SR = 419695119835594763L;
     public static long CAT = 388075127645929475L;
+
+    public static Color EMBED = Color.decode("#7254BF");
 
     public static void main(String[] args) throws Exception {
         CommandHandler handler = new CommandHandler("-", "co.zpdev.bots.ethereal.commands");
