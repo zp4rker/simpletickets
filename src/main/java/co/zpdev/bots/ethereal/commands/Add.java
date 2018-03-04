@@ -14,7 +14,7 @@ public class Add {
 
     @Command(aliases = "add")
     public void onCommand(Message message) {
-        if (!message.getMember().hasPermission(Permission.ADMINISTRATOR)) return;
+        if (message.getMember().getRoles().stream().noneMatch(r -> r.getIdLong() == Ethereal.SR)) return;
         if (message.getMentionedMembers().size() != 1 && message.getMentionedChannels().size() != 1) return;
         if (!message.getMentionedChannels().get(0).getName().startsWith("ticket-")) return;
 
