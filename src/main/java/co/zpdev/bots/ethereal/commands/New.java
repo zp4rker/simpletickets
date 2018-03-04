@@ -15,6 +15,11 @@ public class New {
     public void onCommand(Message message) {
         message.delete().queue();
 
+        if (message.getGuild().getCategoryById(Ethereal.CAT).getTextChannels().stream().anyMatch(c -> c.getPermissionOverride(message.getMember()) != null)) {
+            message.getChannel().sendMessage(new EmbedBuilder().setColor(Ethereal.EMBED).setAuthor("You have already created a ticket!").build()).queue();
+            return;
+        }
+
         TextChannel logs = message.getGuild().getTextChannelById(Ethereal.LOGS);
         String topic = logs.getTopic();
         int ticket = 0;
@@ -39,7 +44,7 @@ public class New {
 
         MessageEmbed embed = new EmbedBuilder()
                 .setColor(Ethereal.EMBED)
-                .setAuthor("Thank you for contacting DigiDev, a team member will be with you shortly.").build();
+                .setAuthor("Thank you for contacting Ethereal Services, a team member will be with you shortly.").build();
         c.sendMessage(embed).queue();
     }
 
