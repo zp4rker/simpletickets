@@ -13,7 +13,7 @@ public class Ethereal {
     public static long LOGS = 419702896221749248L;
     public static long JOIN = 388053430607806465L;
 
-    public static long SR = 419750642433785859L;
+    public static long SR = 388141768559820812L;
     public static long CAT = 388075127645929475L;
 
     public static Color EMBED = Color.decode("#7254BF");
