@@ -31,7 +31,8 @@ public class New {
         .setParent(message.getGuild().getCategoryById(Ethereal.CAT))
         .addPermissionOverride(message.getGuild().getPublicRole(), 0, 3072)
         .addPermissionOverride(message.getMember(), 3072, 0)
-        .addPermissionOverride(message.getGuild().getRoleById(Ethereal.SR), 3072, 0).complete();
+        .addPermissionOverride(message.getGuild().getRoleById(Ethereal.SR), 3072, 0)
+        .setTopic("Unclaimed").complete();
 
         logs.getManager().setTopic("Tickets: " + ticket).queue();
 
