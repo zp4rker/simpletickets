@@ -25,13 +25,12 @@ public class Remove {
         ticket.getPermissionOverride(message.getMentionedMembers().get(0)).delete().complete();
 
         String name = message.getMentionedMembers().get(0).getEffectiveName();
-        TextChannel logs = message.getGuild().getTextChannelById(Ethereal.LOGS);
         MessageEmbed log = new EmbedBuilder().setColor(Ethereal.EMBED)
                 .setAuthor("Member Removed")
                 .setDescription("**" + message.getMember().getEffectiveName() + "** removed **" + name + "** from #"
                         + ticket.getName())
                 .setTimestamp(Instant.now()).build();
-        logs.sendMessage(log).queue();
+        message.getGuild().getTextChannelById(Ethereal.LOGS).sendMessage(log).queue();
     }
 
 }

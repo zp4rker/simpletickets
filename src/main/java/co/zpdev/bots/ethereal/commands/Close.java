@@ -22,12 +22,11 @@ public class Close {
         TextChannel c = message.getTextChannel();
         c.delete().complete();
 
-        TextChannel logs = message.getGuild().getTextChannelById(Ethereal.LOGS);
         MessageEmbed log = new EmbedBuilder().setColor(Ethereal.EMBED)
                 .setAuthor("Ticket Closed")
                 .setDescription("#" + c.getName() + " closed by **" + message.getMember().getEffectiveName() + "**.")
                 .setTimestamp(Instant.now()).build();
-        logs.sendMessage(log).queue();
+        message.getGuild().getTextChannelById(Ethereal.LOGS).sendMessage(log).queue();
     }
 
 }

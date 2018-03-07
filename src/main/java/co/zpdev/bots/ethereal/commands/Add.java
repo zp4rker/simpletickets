@@ -3,7 +3,6 @@ package co.zpdev.bots.ethereal.commands;
 import co.zpdev.bots.core.command.Command;
 import co.zpdev.bots.ethereal.Ethereal;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -24,13 +23,12 @@ public class Add {
         ticket.createPermissionOverride(message.getMentionedMembers().get(0)).setAllow(3072).complete();
 
         String name = message.getMentionedMembers().get(0).getEffectiveName();
-        TextChannel logs = message.getGuild().getTextChannelById(Ethereal.LOGS);
         MessageEmbed log = new EmbedBuilder().setColor(Ethereal.EMBED)
                 .setAuthor("Member Added")
                 .setDescription("**" + message.getMember().getEffectiveName() + "** added **" + name + "** to #"
                         + ticket.getName())
                 .setTimestamp(Instant.now()).build();
-        logs.sendMessage(log).queue();
+        message.getGuild().getTextChannelById(Ethereal.LOGS).sendMessage(log).queue();
     }
 
 }
