@@ -15,8 +15,9 @@ public class Status {
         if (message.getMember().getRoles().stream().noneMatch(r -> r.getIdLong() == Ethereal.SR)) return;
         if (!message.getMentionedChannels().get(0).getName().startsWith("ticket-")) return;
         if (args.length != 1 || !args[0].matches("(?i:aip|ip|afp|c)")) return;
-        //if (message.getTextChannel().getTopic().split(" \\| ").length < 2) return;
+        if (message.getTextChannel().getTopic().split(" \\| ").length < 2) return;
 
+        System.out.println("Debugging");
         String salesRep = message.getTextChannel().getTopic().split(" \\| ")[0];
         String status;
         if (args[0].matches("(?i:aip)")) {
@@ -28,14 +29,17 @@ public class Status {
         } else {
             status = "Completed";
         }
+        System.out.println("Debugging");
 
         message.getTextChannel().getManager().setTopic(salesRep + " | Status: " + status).queue();
+        System.out.println("Debugging");
 
         MessageEmbed log = new EmbedBuilder().setColor(Ethereal.EMBED)
                 .setAuthor("Status Updated")
                 .setDescription("**" + salesRep.substring(10) + "** updated the status of #" + message.getChannel().getName())
                 .setTimestamp(Instant.now()).build();
         message.getGuild().getTextChannelById(Ethereal.LOGS).sendMessage(log).queue();
+        System.out.println("Debugging");
     }
 
 }
