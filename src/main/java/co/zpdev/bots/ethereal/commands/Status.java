@@ -14,7 +14,7 @@ public class Status {
     public void onCommand(Message message, String[] args) {
         if (message.getMember().getRoles().stream().noneMatch(r -> r.getIdLong() == Ethereal.SR)) return;
         if (!message.getMentionedChannels().get(0).getName().startsWith("ticket-")) return;
-        if (args.length != 1 || args[0].matches("(?i:aip|ip|afp|c)")) return;
+        if (args.length != 1 || !args[0].matches("(?i:aip|ip|afp|c)")) return;
         if (message.getTextChannel().getTopic().split(" \\| ").length < 2) return;
 
         String salesRep = message.getTextChannel().getTopic().split(" \\| ")[0];
