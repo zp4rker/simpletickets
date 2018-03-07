@@ -13,7 +13,7 @@ public class Status {
     @Command(aliases = "status")
     public void onCommand(Message message, String[] args) {
         if (message.getMember().getRoles().stream().noneMatch(r -> r.getIdLong() == Ethereal.SR)) return;
-        if (!message.getMentionedChannels().get(0).getName().startsWith("ticket-")) return;
+        if (!message.getChannel().getName().startsWith("ticket-")) return;
         System.out.println("Debugging");
         if (args.length != 1 || !args[0].matches("(?i:aip|ip|afp|c)")) return;
         System.out.println("Debugging");
