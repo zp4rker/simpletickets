@@ -3,7 +3,6 @@ package co.zpdev.bots.ethereal.commands;
 import co.zpdev.bots.core.command.Command;
 import co.zpdev.bots.ethereal.Ethereal;
 import net.dv8tion.jda.core.EmbedBuilder;
-import net.dv8tion.jda.core.Permission;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
@@ -14,7 +13,7 @@ public class Close {
 
     @Command(aliases = "close")
     public void onCommand(Message message) {
-        if (!message.getMember().hasPermission(Permission.ADMINISTRATOR)) return;
+        if (!message.getMember().isOwner() && message.getMember().getRoles().stream().noneMatch(r -> r.getId().equals("388055883172806656"))) return;
         if (!message.getChannel().getName().startsWith("ticket-")) return;
 
         message.delete().queue();

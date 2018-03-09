@@ -36,8 +36,6 @@ public class Status {
             return;
         }
 
-
-        String salesRep = message.getTextChannel().getTopic().split(" \\| ")[0];
         String status;
         if (args[0].matches("(?i:aip)")) {
             status = "Awaiting initial payment";
@@ -49,11 +47,12 @@ public class Status {
             status = "Completed";
         }
 
-        message.getTextChannel().getManager().setTopic(salesRep + " | Status: " + status).queue();
+        message.getTextChannel().getManager().setTopic(message.getTextChannel().getTopic().split(" \\| ")[0] + " | Status: " + status).queue();
 
+        String name = message.getAuthor().getName() + "#" + message.getAuthor().getDiscriminator();
         MessageEmbed log = new EmbedBuilder().setColor(Ethereal.EMBED)
                 .setAuthor("Status Updated")
-                .setDescription("**" + salesRep.substring(11) + "** updated the status of #" + message.getChannel().getName())
+                .setDescription("**" + name + "** updated the status of #" + message.getChannel().getName())
                 .setFooter("Status: " + status, null)
                 .setTimestamp(Instant.now()).build();
         message.getGuild().getTextChannelById(Ethereal.LOGS).sendMessage(log).queue();
