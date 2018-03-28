@@ -18,12 +18,10 @@ import java.util.List;
 
 public class SimpleTickets {
 
-    private static String prefix;
-    private static String token;
+    private static String prefix, token;
 
-    public static long logs;
-    public static long join;
-    public static long cat;
+    public static long logs, cat;
+    public static long join = 0L;
 
     public static Color embed;
 

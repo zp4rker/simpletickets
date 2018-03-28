@@ -11,6 +11,7 @@ public class MemberJoin {
 
     @SubscribeEvent
     public void onJoin(GuildMemberJoinEvent event) {
+        if (SimpleTickets.join == 0) return;
         String name = event.getUser().getName() + "#" + event.getUser().getDiscriminator();
         TextChannel logs = event.getGuild().getTextChannelById(SimpleTickets.join);
         MessageEmbed embed = new EmbedBuilder().setColor(SimpleTickets.embed)
