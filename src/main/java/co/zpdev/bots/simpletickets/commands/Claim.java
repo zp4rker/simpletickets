@@ -1,7 +1,7 @@
-package co.zpdev.bots.ethereal.commands;
+package co.zpdev.bots.simpletickets.commands;
 
 import co.zpdev.bots.core.command.Command;
-import co.zpdev.bots.ethereal.Ethereal;
+import co.zpdev.bots.simpletickets.SimpleTickets;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageEmbed;
@@ -15,17 +15,17 @@ public class Claim {
         if (!message.getChannel().getName().startsWith("ticket-")) return;
         message.delete().queue();
 
-        if (message.getMember().getRoles().stream().noneMatch(r -> r.getIdLong() == Ethereal.SR)) return;
+        if (message.getMember().getRoles().stream().noneMatch(r -> SimpleTickets.roles.contains(r.getIdLong()))) return;
         if (!message.getTextChannel().getTopic().equals("Status: Awaiting Sales representative")) return;
 
         String name = message.getAuthor().getName() + "#" + message.getAuthor().getDiscriminator();
         message.getTextChannel().getManager().setTopic("Sales Rep: " + name + " | Status: Discussing details").queue();
 
-        MessageEmbed log = new EmbedBuilder().setColor(Ethereal.EMBED)
+        MessageEmbed log = new EmbedBuilder().setColor(SimpleTickets.embed)
                 .setAuthor("Ticket Claimed")
                 .setDescription("#" + message.getChannel().getName() + " claimed by **" + message.getMember().getEffectiveName() + "**")
                 .setTimestamp(Instant.now()).build();
-        message.getGuild().getTextChannelById(Ethereal.LOGS).sendMessage(log).queue();
+        message.getGuild().getTextChannelById(SimpleTickets.logs).sendMessage(log).queue();
     }
 
 }

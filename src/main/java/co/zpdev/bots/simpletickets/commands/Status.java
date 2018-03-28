@@ -1,7 +1,7 @@
-package co.zpdev.bots.ethereal.commands;
+package co.zpdev.bots.simpletickets.commands;
 
 import co.zpdev.bots.core.command.Command;
-import co.zpdev.bots.ethereal.Ethereal;
+import co.zpdev.bots.simpletickets.SimpleTickets;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageEmbed;
@@ -14,7 +14,7 @@ public class Status {
 
     @Command(aliases = "status")
     public void onCommand(Message message, String[] args) {
-        if (message.getMember().getRoles().stream().noneMatch(r -> r.getIdLong() == Ethereal.SR)) return;
+        if (message.getMember().getRoles().stream().noneMatch(r -> SimpleTickets.roles.contains(r.getIdLong()))) return;
         if (!message.getChannel().getName().startsWith("ticket-")) return;
         if (message.getTextChannel().getTopic().split(" \\| ").length < 2) return;
         message.delete().queue();
@@ -50,12 +50,12 @@ public class Status {
         message.getTextChannel().getManager().setTopic(message.getTextChannel().getTopic().split(" \\| ")[0] + " | Status: " + status).queue();
 
         String name = message.getAuthor().getName() + "#" + message.getAuthor().getDiscriminator();
-        MessageEmbed log = new EmbedBuilder().setColor(Ethereal.EMBED)
+        MessageEmbed log = new EmbedBuilder().setColor(SimpleTickets.embed)
                 .setAuthor("Status Updated")
                 .setDescription("**" + name + "** updated the status of #" + message.getChannel().getName())
                 .setFooter("Status: " + status, null)
                 .setTimestamp(Instant.now()).build();
-        message.getGuild().getTextChannelById(Ethereal.LOGS).sendMessage(log).queue();
+        message.getGuild().getTextChannelById(SimpleTickets.logs).sendMessage(log).queue();
     }
 
 }

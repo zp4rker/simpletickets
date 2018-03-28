@@ -1,7 +1,7 @@
-package co.zpdev.bots.ethereal.commands;
+package co.zpdev.bots.simpletickets.commands;
 
 import co.zpdev.bots.core.command.Command;
-import co.zpdev.bots.ethereal.Ethereal;
+import co.zpdev.bots.simpletickets.SimpleTickets;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageEmbed;
@@ -12,8 +12,8 @@ public class Help {
     public void onCommand(Message message) {
         if (message.getMember().getRoles().stream().noneMatch(r -> r.getIdLong() == 388818308172087307L)) return;
 
-        MessageEmbed embed = new EmbedBuilder().setColor(Ethereal.EMBED)
-                .setAuthor("Ethereal Bot Commands", null, message.getJDA().getSelfUser().getEffectiveAvatarUrl())
+        MessageEmbed embed = new EmbedBuilder().setColor(SimpleTickets.embed)
+                .setAuthor("SimpleTickets Bot Commands", null, message.getJDA().getSelfUser().getEffectiveAvatarUrl())
                 .setDescription("**-new** Creates a ticket\n" +
                         "**-add @user #ticket** Adds a member to a ticket\n" +
                         "**-claim** Claims a ticket\n" +

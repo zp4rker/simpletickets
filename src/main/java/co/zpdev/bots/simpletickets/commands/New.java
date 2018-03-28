@@ -1,11 +1,12 @@
-package co.zpdev.bots.ethereal.commands;
+package co.zpdev.bots.simpletickets.commands;
 
 import co.zpdev.bots.core.command.Command;
-import co.zpdev.bots.ethereal.Ethereal;
+import co.zpdev.bots.simpletickets.SimpleTickets;
 import net.dv8tion.jda.core.EmbedBuilder;
 import net.dv8tion.jda.core.entities.Message;
 import net.dv8tion.jda.core.entities.MessageEmbed;
 import net.dv8tion.jda.core.entities.TextChannel;
+import net.dv8tion.jda.core.requests.restaction.ChannelAction;
 
 import java.time.Instant;
 
@@ -15,37 +16,38 @@ public class New {
     public void onCommand(Message message) {
         message.delete().queue();
 
-        if (message.getGuild().getCategoryById(Ethereal.CAT).getTextChannels().stream().anyMatch(c -> c.getPermissionOverride(message.getMember()) != null)) {
-            message.getChannel().sendMessage(new EmbedBuilder().setColor(Ethereal.EMBED).setAuthor("You have already created a ticket!").build()).queue();
+        if (message.getGuild().getCategoryById(SimpleTickets.cat).getTextChannels().stream().anyMatch(c -> c.getPermissionOverride(message.getMember()) != null)) {
+            message.getChannel().sendMessage(new EmbedBuilder().setColor(SimpleTickets.embed).setAuthor("You have already created a ticket!").build()).queue();
             return;
         }
 
-        TextChannel logs = message.getGuild().getTextChannelById(Ethereal.LOGS);
+        TextChannel logs = message.getGuild().getTextChannelById(SimpleTickets.logs);
         String topic = logs.getTopic();
         int ticket = 0;
         if (!topic.isEmpty()) ticket = Integer.parseInt(topic.replace("Tickets: ", ""));
         ticket++;
 
-        TextChannel c = (TextChannel) message.getGuild().getController()
+        ChannelAction ca = message.getGuild().getController()
         .createTextChannel("ticket-" + String.format("%04d", ticket))
-        .setParent(message.getGuild().getCategoryById(Ethereal.CAT))
+        .setParent(message.getGuild().getCategoryById(SimpleTickets.cat))
         .addPermissionOverride(message.getGuild().getPublicRole(), 0, 3072)
         .addPermissionOverride(message.getMember(), 3072, 0)
-        .addPermissionOverride(message.getGuild().getRoleById(Ethereal.SR), 3072, 0)
-        .setTopic("Status: Awaiting Sales representative").complete();
+        .setTopic("Status: Awaiting Sales representative");
+        SimpleTickets.roles.forEach(r -> ca.addPermissionOverride(message.getGuild().getRoleById(r), 3072, 0));
+        TextChannel c = (TextChannel) ca.complete();
 
         logs.getManager().setTopic("Tickets: " + ticket).queue();
 
         String name = message.getAuthor().getName() + "#" + message.getAuthor().getDiscriminator();
-        MessageEmbed log = new EmbedBuilder().setColor(Ethereal.EMBED).setAuthor("New Ticket")
+        MessageEmbed log = new EmbedBuilder().setColor(SimpleTickets.embed).setAuthor("New Ticket")
                 .setDescription("New ticket created by **" + name + "**.")
                 .setFooter("Ticket #" + String.format("%04d", ticket), null)
                 .setTimestamp(Instant.now()).build();
         logs.sendMessage(log).queue();
 
         MessageEmbed embed = new EmbedBuilder()
-                .setColor(Ethereal.EMBED)
-                .setAuthor("Thank you for contacting Ethereal Services, a team member will be with you shortly.").build();
+                .setColor(SimpleTickets.embed)
+                .setAuthor("Thank you for contacting SimpleTickets Services, a team member will be with you shortly.").build();
         c.sendMessage(embed).queue();
     }
 

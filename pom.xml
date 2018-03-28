@@ -5,8 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>co.zpdev.bots</groupId>
-    <artifactId>ethereal</artifactId>
-    <version>1.1.1</version>
+    <artifactId>simpletickets</artifactId>
+    <version>1.0.0</version>
 
     <repositories>
         <repository>
@@ -58,7 +58,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>co.zpdev.bots.ethereal.Ethereal</mainClass>
+                            <mainClass>co.zpdev.bots.simpletickets.SimpleTickets</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
