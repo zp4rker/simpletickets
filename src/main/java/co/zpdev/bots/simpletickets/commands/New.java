@@ -32,7 +32,7 @@ public class New {
         .setParent(message.getGuild().getCategoryById(SimpleTickets.cat))
         .addPermissionOverride(message.getGuild().getPublicRole(), 0, 3072)
         .addPermissionOverride(message.getMember(), 3072, 0)
-        .setTopic("Status: Awaiting Sales representative");
+        .setTopic("Status: Inquiry");
         SimpleTickets.roles.forEach(r -> ca.addPermissionOverride(message.getGuild().getRoleById(r), 3072, 0));
         TextChannel c = (TextChannel) ca.complete();
 

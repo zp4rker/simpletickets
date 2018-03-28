@@ -16,7 +16,6 @@ public class Help {
                 .setAuthor("SimpleTickets Bot Commands", null, message.getJDA().getSelfUser().getEffectiveAvatarUrl())
                 .setDescription("**-new** Creates a ticket\n" +
                         "**-add @user #ticket** Adds a member to a ticket\n" +
-                        "**-claim** Claims a ticket\n" +
                         "**-status <aip|ip|afp|c>** Sets the status of a ticket")
                 .setFooter("Made by ZP4RKER#3333", null).build();
 

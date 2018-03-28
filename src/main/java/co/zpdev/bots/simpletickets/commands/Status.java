@@ -16,7 +16,7 @@ public class Status {
     public void onCommand(Message message, String[] args) {
         if (message.getMember().getRoles().stream().noneMatch(r -> SimpleTickets.roles.contains(r.getIdLong()))) return;
         if (!message.getChannel().getName().startsWith("ticket-")) return;
-        if (message.getTextChannel().getTopic().split(" \\| ").length < 2) return;
+        //if (message.getTextChannel().getTopic().split(" \\| ").length < 2) return;
         message.delete().queue();
 
         if (args.length != 1 || !args[0].matches("(?i:aip|ip|afp|c)")) {
@@ -47,7 +47,7 @@ public class Status {
             status = "Completed";
         }
 
-        message.getTextChannel().getManager().setTopic(message.getTextChannel().getTopic().split(" \\| ")[0] + " | Status: " + status).queue();
+        message.getTextChannel().getManager().setTopic("Status: " + status).queue();
 
         String name = message.getAuthor().getName() + "#" + message.getAuthor().getDiscriminator();
         MessageEmbed log = new EmbedBuilder().setColor(SimpleTickets.embed)
