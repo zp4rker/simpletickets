@@ -1,2 +1,2 @@
-# SimpleTickets
-A simple open-source ticket bot.
+# simpletickets
+A simple open-source discord ticket bot written in Kotlin.
