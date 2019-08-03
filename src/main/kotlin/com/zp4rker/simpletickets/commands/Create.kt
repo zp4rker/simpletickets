@@ -7,20 +7,19 @@ import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.TextChannel
-import java.awt.Color
 import java.time.Instant
 
 object Create : Command(aliases = arrayOf("create"), description = "Creates a new ticket.", autoDelete = true) {
     override fun handle(message: Message, channel: TextChannel, guild: Guild, args: List<String>) {
-        val category = guild.getCategoryById(SimpleTickets.category) ?: return
         val member = message.member ?: return
+        val category = guild.getCategoryById(SimpleTickets.category) ?: return
+        val logs = guild.getTextChannelById(SimpleTickets.logs) ?: return
 
         if (category.textChannels.any { it.getPermissionOverride(member) != null }) {
-            channel.sendMessage(EmbedBuilder().setColor(Color.RED).setDescription(":x: You already have an open ticket!").build()).queue()
+            channel.sendMessage(EmbedBuilder().setColor(0xFF0000).setDescription(":x: You already have an open ticket!").build()).queue()
             return
         }
 
-        val logs = guild.getTextChannelById(SimpleTickets.logs) ?: return
         val ticketNo = logs.topic?.run {
             when {
                 isNotEmpty() -> toInt() + 1
@@ -41,12 +40,12 @@ object Create : Command(aliases = arrayOf("create"), description = "Creates a ne
                 setTimestamp(Instant.now())
                 setAuthor("New Ticket")
 
-                setDescription("A new ticket was created by **${member.user.asTag}**")
-            }.build().also { embed -> logs.sendMessage(embed).queue() }
+                setDescription("A new ticket was created by **${member.user.asTag}**.")
+            }.build().apply { logs.sendMessage(this).queue() }
 
             EmbedBuilder().setColor(embedColour).apply {
                 setAuthor("Thank you for contacting us, a team member will be with you shortly.")
-            }.build().also { embed -> it.sendMessage(embed).queue() }
+            }.build().apply { it.sendMessage(this).queue() }
         }
 
         logs.manager.setTopic("Tickets: $ticketNo").queue()
