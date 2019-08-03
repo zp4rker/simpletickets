@@ -14,7 +14,7 @@ const val embedColour = 0x353940
 fun main() {
     SimpleTickets.loadConfig()
 
-    val handler = CommandHandler(SimpleTickets.prefix).apply { registerCommands(
+    val handler = CommandHandler(SimpleTickets.prefix, true).apply { registerCommands(
             CreateTicket,
             CloseTicket,
             AddUser

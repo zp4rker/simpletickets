@@ -23,8 +23,8 @@
     <dependencies>
         <dependency>
             <groupId>com.zp4rker</groupId>
-            <artifactId>discord-core</artifactId>
-            <version>2.0.9</version>
+            <artifactId>discore</artifactId>
+            <version>2.2.0</version>
         </dependency>
     </dependencies>
 
