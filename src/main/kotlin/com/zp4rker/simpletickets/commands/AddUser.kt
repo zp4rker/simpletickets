@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.TextChannel
 import java.time.Instant
 
-object AddUser : Command(aliases = arrayOf("add", "adduser"), description = "Adds a member to the ticket.", usage = "add @mmeber", mentionedMembers= 1, autoDelete = true) {
+object AddUser : Command(aliases = arrayOf("add", "adduser"), description = "Adds a member to the ticket.", usage = "add @member", mentionedMembers= 1, autoDelete = true) {
     override fun handle(message: Message, channel: TextChannel, guild: Guild, args: List<String>) {
         val member = message.member ?: return
         val logs = guild.getTextChannelById(SimpleTickets.logs) ?: return
@@ -21,8 +21,8 @@ object AddUser : Command(aliases = arrayOf("add", "adduser"), description = "Add
         channel.createPermissionOverride(mentioned).apply { allow = 3072 }.queue()
 
         EmbedBuilder().setColor(embedColour).apply {
-            setTitle("Member added")
-            setDescription("**${member.user.asTag}** added **${mentioned.user.asTag}** to #${channel.name}.")
+            setAuthor("${mentioned.effectiveName} was added to #${channel.name}", null, mentioned.user.effectiveAvatarUrl)
+            setFooter("by ${member.effectiveName}", member.user.effectiveAvatarUrl)
             setTimestamp(Instant.now())
         }.build().apply { logs.sendMessage(this).queue() }
     }

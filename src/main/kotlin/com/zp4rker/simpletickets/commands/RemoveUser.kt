@@ -7,6 +7,7 @@ import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.TextChannel
+import java.time.Instant
 
 object RemoveUser : Command(aliases = arrayOf("remove", "removeuser"), description = "Removes a member from a ticket.", usage = "remove @member", mentionedMembers = 1, autoDelete = true) {
     override fun handle(message: Message, channel: TextChannel, guild: Guild, args: List<String>) {
@@ -20,8 +21,9 @@ object RemoveUser : Command(aliases = arrayOf("remove", "removeuser"), descripti
         channel.getPermissionOverride(mentioned)?.also { it.delete().queue() }
 
         EmbedBuilder().setColor(embedColour).apply {
-            setTitle("Member removed")
-            setDescription("**${member.user.asTag}** removed **${mentioned.user.asTag}** from #${channel.name}.")
+            setAuthor("${mentioned.effectiveName} was removed from #${channel.name}", null, mentioned.user.effectiveAvatarUrl)
+            setFooter("by ${member.effectiveName}", member.user.effectiveAvatarUrl)
+            setTimestamp(Instant.now())
         }.build().apply { logs.sendMessage(this).queue() }
     }
 }

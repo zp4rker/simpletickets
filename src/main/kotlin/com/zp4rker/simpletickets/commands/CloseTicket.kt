@@ -20,8 +20,8 @@ object CloseTicket : Command(aliases = arrayOf("close", "closeticket"), descript
         channel.delete().queue()
 
         EmbedBuilder().setColor(embedColour).apply {
-            setTitle("Ticket closed")
-            setDescription("#${channel.name} closed by **${member.user.asTag}**.")
+            setTitle("#${channel.name} was closed")
+            setFooter("by ${member.effectiveName}", member.user.effectiveAvatarUrl)
             setTimestamp(Instant.now())
         }.build().apply { logs.sendMessage(this).queue() }
     }

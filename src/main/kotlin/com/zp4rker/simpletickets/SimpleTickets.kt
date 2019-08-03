@@ -5,6 +5,7 @@ import com.zp4rker.core.discord.config.ConfigManager
 import com.zp4rker.simpletickets.commands.AddUser
 import com.zp4rker.simpletickets.commands.CloseTicket
 import com.zp4rker.simpletickets.commands.CreateTicket
+import com.zp4rker.simpletickets.commands.RemoveUser
 import net.dv8tion.jda.api.AccountType
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.hooks.AnnotatedEventManager
@@ -17,7 +18,8 @@ fun main() {
     val handler = CommandHandler(SimpleTickets.prefix, true).apply { registerCommands(
             CreateTicket,
             CloseTicket,
-            AddUser
+            AddUser,
+            RemoveUser
     ) }
 
     JDABuilder(AccountType.BOT).apply {

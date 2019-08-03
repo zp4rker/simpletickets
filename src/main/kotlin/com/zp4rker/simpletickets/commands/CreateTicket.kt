@@ -22,10 +22,10 @@ object CreateTicket : Command(aliases = arrayOf("new", "createticket"), descript
 
         val ticketNo = logs.topic?.run {
             when {
-                isNotEmpty() -> toInt() + 1
-                else -> 0
+                isNotEmpty() -> replace("Tickets: ", "").toInt() + 1
+                else -> 1
             }
-        }
+        } ?: 1
 
         guild.createTextChannel("ticket-${String.format("%04d", ticketNo)}").apply {
             setParent(category)
@@ -42,10 +42,9 @@ object CreateTicket : Command(aliases = arrayOf("new", "createticket"), descript
         }
 
         EmbedBuilder().setColor(embedColour).apply {
+            setAuthor("A new ticket has been created")
+            setFooter("by ${member.effectiveName}", member.user.effectiveAvatarUrl)
             setTimestamp(Instant.now())
-            setAuthor("New Ticket")
-
-            setDescription("A new ticket was created by **${member.user.asTag}**.")
         }.build().apply { logs.sendMessage(this).queue() }
 
         logs.manager.setTopic("Tickets: $ticketNo").queue()
