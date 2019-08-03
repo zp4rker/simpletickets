@@ -7,9 +7,8 @@ import net.dv8tion.jda.api.EmbedBuilder
 import net.dv8tion.jda.api.entities.Guild
 import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.TextChannel
-import java.time.Instant
 
-object AddUser : Command(aliases = arrayOf("add", "adduser"), description = "Adds a member to the ticket.", usage = "add @mmeber", mentionedMembers= 1, autoDelete = true) {
+object RemoveUser : Command(aliases = arrayOf("remove", "removeuser"), description = "Removes a member from a ticket.", usage = "remove @member", mentionedMembers = 1, autoDelete = true) {
     override fun handle(message: Message, channel: TextChannel, guild: Guild, args: List<String>) {
         val member = message.member ?: return
         val logs = guild.getTextChannelById(SimpleTickets.logs) ?: return
@@ -18,12 +17,11 @@ object AddUser : Command(aliases = arrayOf("add", "adduser"), description = "Add
         if (!channel.name.startsWith("ticket-")) return
 
         val mentioned = message.mentionedMembers[0]
-        channel.createPermissionOverride(mentioned).apply { allow = 3072 }.queue()
+        channel.getPermissionOverride(mentioned)?.also { it.delete().queue() }
 
         EmbedBuilder().setColor(embedColour).apply {
-            setTitle("Member added")
-            setDescription("**${member.user.asTag}** added **${mentioned.user.asTag}** to #${channel.name}.")
-            setTimestamp(Instant.now())
+            setTitle("Member removed")
+            setDescription("**${member.user.asTag}** removed **${mentioned.user.asTag}** from #${channel.name}.")
         }.build().apply { logs.sendMessage(this).queue() }
     }
 }
