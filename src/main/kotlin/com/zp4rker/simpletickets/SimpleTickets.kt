@@ -2,8 +2,9 @@ package com.zp4rker.simpletickets
 
 import com.zp4rker.core.discord.command.CommandHandler
 import com.zp4rker.core.discord.config.ConfigManager
-import com.zp4rker.simpletickets.commands.Close
-import com.zp4rker.simpletickets.commands.Create
+import com.zp4rker.simpletickets.commands.AddUser
+import com.zp4rker.simpletickets.commands.CloseTicket
+import com.zp4rker.simpletickets.commands.CreateTicket
 import net.dv8tion.jda.api.AccountType
 import net.dv8tion.jda.api.JDABuilder
 import net.dv8tion.jda.api.hooks.AnnotatedEventManager
@@ -14,8 +15,9 @@ fun main() {
     SimpleTickets.loadConfig()
 
     val handler = CommandHandler(SimpleTickets.prefix).apply { registerCommands(
-            Create,
-            Close
+            CreateTicket,
+            CloseTicket,
+            AddUser
     ) }
 
     JDABuilder(AccountType.BOT).apply {

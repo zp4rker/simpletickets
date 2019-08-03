@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.TextChannel
 import java.time.Instant
 
-object Create : Command(aliases = arrayOf("create"), description = "Creates a new ticket.", autoDelete = true) {
+object CreateTicket : Command(aliases = arrayOf("new", "createticket"), description = "Creates a new ticket.", autoDelete = true) {
     override fun handle(message: Message, channel: TextChannel, guild: Guild, args: List<String>) {
         val member = message.member ?: return
         val category = guild.getCategoryById(SimpleTickets.category) ?: return
@@ -37,16 +37,16 @@ object Create : Command(aliases = arrayOf("create"), description = "Creates a ne
             setTopic("Status: Inquiry")
         }.queue {
             EmbedBuilder().setColor(embedColour).apply {
-                setTimestamp(Instant.now())
-                setAuthor("New Ticket")
-
-                setDescription("A new ticket was created by **${member.user.asTag}**.")
-            }.build().apply { logs.sendMessage(this).queue() }
-
-            EmbedBuilder().setColor(embedColour).apply {
                 setAuthor("Thank you for contacting us, a team member will be with you shortly.")
             }.build().apply { it.sendMessage(this).queue() }
         }
+
+        EmbedBuilder().setColor(embedColour).apply {
+            setTimestamp(Instant.now())
+            setAuthor("New Ticket")
+
+            setDescription("A new ticket was created by **${member.user.asTag}**.")
+        }.build().apply { logs.sendMessage(this).queue() }
 
         logs.manager.setTopic("Tickets: $ticketNo").queue()
     }
