@@ -13,8 +13,6 @@ import net.dv8tion.jda.api.hooks.AnnotatedEventManager
 const val embedColour = 0x353940
 
 fun main() {
-    SimpleTickets.loadConfig()
-
     val handler = CommandHandler(SimpleTickets.prefix, true).apply { registerCommands(
             CreateTicket,
             CloseTicket,
@@ -33,13 +31,13 @@ fun main() {
 object SimpleTickets {
     private val config = ConfigManager.loadConfig("config.json")
 
-    lateinit var prefix: String
-    lateinit var token: String
-    var logs = 0L
-    var category = 0L
+    val prefix: String
+    val token: String
+    val logs: Long
+    val category: Long
     val roles = mutableListOf<Long>()
 
-    fun loadConfig() {
+    init {
         prefix = config.getString("prefix")
         token = config.getString("token")
         logs = config.getLong("log-channel")
