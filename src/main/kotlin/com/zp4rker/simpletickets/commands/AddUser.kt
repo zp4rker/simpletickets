@@ -21,8 +21,8 @@ object AddUser : Command(aliases = arrayOf("add", "adduser"), description = "Add
         channel.createPermissionOverride(mentioned).apply { allow = 3072 }.queue()
 
         EmbedBuilder().setColor(embedColour).apply {
-            setAuthor("${mentioned.effectiveName} was added to #${channel.name}", null, mentioned.user.effectiveAvatarUrl)
-            setFooter("by ${member.effectiveName}", member.user.effectiveAvatarUrl)
+            setAuthor("${mentioned.user.asTag} was added to #${channel.name}", null, mentioned.user.effectiveAvatarUrl)
+            setFooter("by ${member.user.asTag}", member.user.effectiveAvatarUrl)
             setTimestamp(Instant.now())
         }.build().apply { logs.sendMessage(this).queue() }
     }

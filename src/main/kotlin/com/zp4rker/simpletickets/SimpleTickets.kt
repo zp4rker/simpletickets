@@ -1,6 +1,7 @@
 package com.zp4rker.simpletickets
 
 import com.zp4rker.core.discord.command.CommandHandler
+import com.zp4rker.core.discord.config.Config
 import com.zp4rker.core.discord.config.ConfigManager
 import com.zp4rker.simpletickets.commands.AddUser
 import com.zp4rker.simpletickets.commands.CloseTicket
@@ -29,17 +30,17 @@ fun main() {
 }
 
 object SimpleTickets {
-    private val config = ConfigManager.loadConfig("config.json")
+    private val config = Config.load("config.json")
 
-    val prefix: String
     val token: String
+    val prefix: String
     val logs: Long
     val category: Long
     val roles = mutableListOf<Long>()
 
     init {
-        prefix = config.getString("prefix")
         token = config.getString("token")
+        prefix = config.getString("prefix")
         logs = config.getLong("log-channel")
         category = config.getLong("category")
         roles.addAll(config.getJSONArray("roles").toMutableSet().map { it as Long })

@@ -21,8 +21,8 @@ object RemoveUser : Command(aliases = arrayOf("remove", "removeuser"), descripti
         channel.getPermissionOverride(mentioned)?.also { it.delete().queue() }
 
         EmbedBuilder().setColor(embedColour).apply {
-            setAuthor("${mentioned.effectiveName} was removed from #${channel.name}", null, mentioned.user.effectiveAvatarUrl)
-            setFooter("by ${member.effectiveName}", member.user.effectiveAvatarUrl)
+            setAuthor("${mentioned.user.asTag} was removed from #${channel.name}", null, mentioned.user.effectiveAvatarUrl)
+            setFooter("by ${member.user.asTag}", member.user.effectiveAvatarUrl)
             setTimestamp(Instant.now())
         }.build().apply { logs.sendMessage(this).queue() }
     }

@@ -33,19 +33,17 @@ object CreateTicket : Command(aliases = arrayOf("new", "createticket"), descript
             addPermissionOverride(guild.publicRole, 0, 3072)
             addPermissionOverride(member, 3072, 0)
             SimpleTickets.roles.forEach { guild.getRoleById(it)?.also { r -> addPermissionOverride(r, 3072, 0) } }
-
-            setTopic("Status: Inquiry")
         }.queue {
             EmbedBuilder().setColor(embedColour).apply {
                 setAuthor("Thank you for contacting us, a team member will be with you shortly.")
             }.build().apply { it.sendMessage(this).queue() }
-        }
 
-        EmbedBuilder().setColor(embedColour).apply {
-            setAuthor("A new ticket has been created")
-            setFooter("by ${member.effectiveName}", member.user.effectiveAvatarUrl)
-            setTimestamp(Instant.now())
-        }.build().apply { logs.sendMessage(this).queue() }
+            EmbedBuilder().setColor(embedColour).apply {
+                setAuthor("A new ticket has been created (#${it.name})")
+                setFooter("by ${member.user.asTag}", member.user.effectiveAvatarUrl)
+                setTimestamp(Instant.now())
+            }.build().apply { logs.sendMessage(this).queue() }
+        }
 
         logs.manager.setTopic("Tickets: $ticketNo").queue()
     }

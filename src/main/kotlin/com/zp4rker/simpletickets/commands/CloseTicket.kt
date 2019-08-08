@@ -9,7 +9,7 @@ import net.dv8tion.jda.api.entities.Message
 import net.dv8tion.jda.api.entities.TextChannel
 import java.time.Instant
 
-object CloseTicket : Command(aliases = arrayOf("close", "closeticket"), description = "Closes an open ticket.", autoDelete = true) {
+object CloseTicket : Command(aliases = arrayOf("close", "closeticket"), description = "Closes an open ticket.") {
     override fun handle(message: Message, channel: TextChannel, guild: Guild, args: List<String>) {
         val member = message.member ?: return
         val logs = guild.getTextChannelById(SimpleTickets.logs) ?: return
@@ -21,7 +21,7 @@ object CloseTicket : Command(aliases = arrayOf("close", "closeticket"), descript
 
         EmbedBuilder().setColor(embedColour).apply {
             setTitle("#${channel.name} was closed")
-            setFooter("by ${member.effectiveName}", member.user.effectiveAvatarUrl)
+            setFooter("by ${member.user.asTag}", member.user.effectiveAvatarUrl)
             setTimestamp(Instant.now())
         }.build().apply { logs.sendMessage(this).queue() }
     }
